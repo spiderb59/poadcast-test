@@ -5,9 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4  # Updated to version 4
+        uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v5  # Updated to version 5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       - name: Install Dependencies
@@ -16,10 +16,9 @@ jobs:
           pip install pyyaml
       - name: Run Feed Generator
         run: python feed.py
-      - name: Push Repo
+      - name: Push Changes
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Modified Feed"
-          git push
+          git diff-index --quiet HEAD || git commit -m "Update podcast feeds" && git push
